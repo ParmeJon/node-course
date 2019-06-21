@@ -6,7 +6,7 @@ console.log(msg)
 
 console.log(chalk.green("Success!"))
 
-console.log(chalk.bold.blue.inverse.underline("testing"))
+console.log(chalk.bold.yellow.inverse.underline("Error!"))
 
 
 
