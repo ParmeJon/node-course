@@ -1,8 +1,11 @@
-// load the fs module and store it into the fs variabl
-const fs = require('fs')
+// module exports is what is the return value of require.
+// const add = require(`./Extra/utils2.js`)
+//
+// const sum = add(4, -2)
+// console.log(sum)
 
-// call writeFileSync on fs to write text on the notes.txt file
-// fs.writeFileSync('notes.txt', "My name is Jon and I'm learning node.js!")
+const getNotes = require('./notes.js')
 
-// appending a msh to the text file instead of overwriting.
-fs.appendFileSync('notes.txt', " I love to learn!")
+const msg = getNotes()
+
+console.log(msg)
