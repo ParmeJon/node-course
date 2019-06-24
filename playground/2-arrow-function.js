@@ -13,7 +13,7 @@
 const event = {
   name: 'Birthday party',
   guestList: ['Andrew', 'John', 'Mike'],
-  // ES6 syntax
+  // ES6 method definition syntax
   // arrow functions are poor candidates for methods but good for other stuff.
   printGuestList() {
     console.log('Guest list for ' + this.name)
