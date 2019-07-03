@@ -9,9 +9,9 @@ const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
 
 const id = new ObjectID()
-console.log(id.id.length)
-console.log(id.getTimestamp())
-console.log(id.toHexString().length)
+// console.log(id.id.length)
+// console.log(id.getTimestamp())
+// console.log(id.toHexString().length)
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
   if (error) {
@@ -20,6 +20,39 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   const db = client.db(databaseName)
 
+  // db.collection('users').findOne({ _id: new ObjectID("5d1ada9e998871482ffece1e") }, (error, user) => {
+  //   if (error) {
+  //     return console.log('Unable to fetch')
+  //   }
+  //   console.log(user)
+  // })
+
+// READING
+// return value is a cursor.
+  db.collection('users').find({ age: 27 }).toArray((error, users) => {
+    console.log(users)
+  })
+
+  db.collection('users').find({ age: 27 }).count((error, count) => {
+    console.log(count)
+  })
+
+  db.collection('tasks').findOne({ _id: new ObjectID("5d1ad7929cff5d47a1faf3c4")}, (error, task) => {
+    if (error) {
+      return console.log('Unable to find task')
+    }
+
+    console.log(task)
+  })
+
+  db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
+    if (error) {
+      return console.log(error)
+    }
+    console.log(tasks)
+  })
+
+// CREATING
   // db.collection('users').insertOne({
   //   _id: id,
   //   name: 'Ben',
