@@ -20,37 +20,89 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   const db = client.db(databaseName)
 
-  // db.collection('users').findOne({ _id: new ObjectID("5d1ada9e998871482ffece1e") }, (error, user) => {
-  //   if (error) {
-  //     return console.log('Unable to fetch')
+
+// DELETE
+
+  // db.collection('users').deleteMany({
+  //   age: 27
+  // }).then((result) => {
+  //   console.log(result)
+  // }).catch((error) => {
+  //   console.log(error)
+  // })
+
+  db.collection('tasks').deleteOne({
+    description: "Make a project"
+  }).then((result) => {
+    console.log(result)
+  }).catch((error) => {
+    console.log(error)
+  })
+
+
+
+
+// UPDATING
+  // db.collection('users').updateOne({
+  //   _id: new ObjectID("5d1ad4d2161bda4713122f05")
+  // }, {
+    // update operators
+    // $set: {
+    //   name: 'Billy'
+    // }
+    // $inc: {
+    //   age: 1
+    // }
+    // no extra callback function which makes it return a promise.
+  // }).then((result) => {
+  //   console.log(result)
+  // }).catch((error)=> {
+  //   console.log(error)
+  // })
+
+  // db.collection('tasks').updateMany({
+  //   completed: false
+  // }, {
+  //   $set: {
+  //     completed: true
   //   }
-  //   console.log(user)
+  // }).then((result) => {
+  //   // number of things changed
+  //   console.log(result.modifiedCount)
+  // }).catch((error) => {
+  //   console.log(error)
   // })
 
 // READING
+// db.collection('users').findOne({ _id: new ObjectID("5d1ada9e998871482ffece1e") }, (error, user) => {
+  //   if (error) {
+    //     return console.log('Unable to fetch')
+    //   }
+    //   console.log(user)
+    // })
 // return value is a cursor.
-  db.collection('users').find({ age: 27 }).toArray((error, users) => {
-    console.log(users)
-  })
-
-  db.collection('users').find({ age: 27 }).count((error, count) => {
-    console.log(count)
-  })
-
-  db.collection('tasks').findOne({ _id: new ObjectID("5d1ad7929cff5d47a1faf3c4")}, (error, task) => {
-    if (error) {
-      return console.log('Unable to find task')
-    }
-
-    console.log(task)
-  })
-
-  db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
-    if (error) {
-      return console.log(error)
-    }
-    console.log(tasks)
-  })
+  // db.collection('users').find({ age: 27 }).toArray((error, users) => {
+  //   console.log(users)
+  // })
+  //
+  // db.collection('users').find({ age: 27 }).count((error, count) => {
+  //   console.log(count)
+  // })
+  //
+  // db.collection('tasks').findOne({ _id: new ObjectID("5d1ad7929cff5d47a1faf3c4")}, (error, task) => {
+  //   if (error) {
+  //     return console.log('Unable to find task')
+  //   }
+  //
+  //   console.log(task)
+  // })
+  //
+  // db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
+  //   if (error) {
+  //     return console.log(error)
+  //   }
+  //   console.log(tasks)
+  // })
 
 // CREATING
   // db.collection('users').insertOne({
