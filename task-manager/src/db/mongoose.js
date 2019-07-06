@@ -1,22 +1,54 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 
 mongoose.connect(`mongodb://127.0.0.1:27017/task-manager-api`, {
   useNewUrlParser: true,
   useCreateIndex: true
 })
 
-const User = mongoose.model('User', {
-  name: {
-    type: String
-  },
-  age: {
-    type: Number
-  }
-})
-
+// const User = mongoose.model('User', {
+//   name: {
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   email: {
+//     type: String,
+//     required: true,
+//     trim: true,
+//     lowercase: true,
+//     validate(value) {
+//       if (!validator.isEmail(value)) {
+//         throw new Error('Email is invalid.')
+//       }
+//     }
+//   },
+//   age: {
+//     type: Number,
+//     default: 0,
+//     validate(value) {
+//       if (value < 0) {
+//         throw new Error('Age must be a positive number.')
+//       }
+//     }
+//   },
+//   password: {
+//     type: String,
+//     required: true,
+//     minLength: 7,
+//     trime: true,
+//     validate(value) {
+//       if (value.toLowerCase().includes("password")) {
+//         throw new Error('Password must not include password')
+//       }
+//     }
+//   }
+// })
+//
 // const me = new User({
-//   name: 'Andrew',
-//   age: 27
+//   name: '  Andrew  ',
+//   email: '  jon@chan.io  ',
+//   password: 'hello12'
 // })
 //
 // // this returns a promise
@@ -29,16 +61,18 @@ const User = mongoose.model('User', {
 // converts lowercase and pluralizes model name in mongoDB
 const Task = mongoose.model('Task', {
   description: {
-    type: String
+    type: String,
+    required: true,
+    trim: true
   },
   completed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   }
 })
 
 const cry = new Task({
-  description: 'Excreting salt water from eyes.',
-  completed: false
+  description: '   Excreting salt water from eyes.    '
 })
 
 cry.save().then((cry) => {
