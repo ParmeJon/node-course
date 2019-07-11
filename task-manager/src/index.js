@@ -6,13 +6,51 @@ const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
+
+// Middleware examples 
+// app.use((req, res, next) => {
+//   if (req.method === 'GET') {
+//     res.send('GET requests are disabled.')
+//   } else {
+//     next()
+//   }
+// })
+
+// app.use((req, res, next) => {
+//   res.status(503).send('Maintenance: Currently all routes are disabled.')
+// })
+
 // parses incoming json so we have it accessible as an object
 app.use(express.json())
+
 app.use(userRouter)
 app.use(taskRouter)
 
+//
+// Without middleware: new request -> run route handler
+//
+// With middleware: new request -> do something -> run route handler
+//
 
 
 app.listen(port, () => {
   console.log(`Server is up on port ${port}.` )
 })
+
+const jwt = require('jsonwebtoken')
+
+const myFunction = async () => {
+  const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'})
+  console.log(token)
+
+  const data = jwt.verify(token, 'thisismynewcourse')
+  console.log(data)
+}
+
+myFunction()
+
+// encryption and decryption
+//  andrew => poidbfjskbfkjsdf -> andrew
+
+// hashing algorithms are one way
+// mypass -> ffhaijkbfkabdhjfaba

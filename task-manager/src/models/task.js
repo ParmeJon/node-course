@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-// converts lowercase and pluralizes model name in mongoDB
-const Task = mongoose.model('Task', {
+const taskSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
@@ -12,5 +11,7 @@ const Task = mongoose.model('Task', {
     default: false
   }
 })
+// converts lowercase and pluralizes model name in mongoDB
+const Task = mongoose.model('Task', taskSchema)
 
 module.exports = Task
