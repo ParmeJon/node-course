@@ -37,23 +37,23 @@ app.listen(port, () => {
   console.log(`Server is up on port ${port}.` )
 })
 
-const Task = require('./models/task')
-const User = require('./models/user')
-
-const main = async () => {
-  // const task = await Task.findById("5d2b9200f13d26082860a85b")
-  // // Getting entire profile based on owner id relationship
-  // // Turns task.owner to be the entire obj
-  // await task.populate('owner').execPopulate()
-  // console.log(task.owner)
-
-  // Finding Task based on User
-  const user = await User.findById('5d2b919218a50107fad32fbf')
-  await user.populate('tasks').execPopulate()
-  console.log(user.tasks)
-}
-
-main()
+// const Task = require('./models/task')
+// const User = require('./models/user')
+//
+// const main = async () => {
+//   // const task = await Task.findById("5d2b9200f13d26082860a85b")
+//   // // Getting entire profile based on owner id relationship
+//   // // Turns task.owner to be the entire obj
+//   // await task.populate('owner').execPopulate()
+//   // console.log(task.owner)
+// 
+//   // Finding Task based on User
+//   const user = await User.findById('5d2b919218a50107fad32fbf')
+//   await user.populate('tasks').execPopulate()
+//   console.log(user.tasks)
+// }
+//
+// main()
 
 
 // const jwt = require('jsonwebtoken')

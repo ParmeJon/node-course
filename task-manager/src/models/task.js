@@ -15,6 +15,8 @@ const taskSchema = new mongoose.Schema({
     required: true,
     ref: 'User'
   }
+}, {
+  timestamps: true
 })
 // converts lowercase and pluralizes model name in mongoDB
 const Task = mongoose.model('Task', taskSchema)
