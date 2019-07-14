@@ -7,7 +7,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 
-// Middleware examples 
+// Middleware examples
 // app.use((req, res, next) => {
 //   if (req.method === 'GET') {
 //     res.send('GET requests are disabled.')
@@ -37,17 +37,36 @@ app.listen(port, () => {
   console.log(`Server is up on port ${port}.` )
 })
 
-const jwt = require('jsonwebtoken')
+const Task = require('./models/task')
+const User = require('./models/user')
 
-const myFunction = async () => {
-  const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'})
-  console.log(token)
+const main = async () => {
+  // const task = await Task.findById("5d2b9200f13d26082860a85b")
+  // // Getting entire profile based on owner id relationship
+  // // Turns task.owner to be the entire obj
+  // await task.populate('owner').execPopulate()
+  // console.log(task.owner)
 
-  const data = jwt.verify(token, 'thisismynewcourse')
-  console.log(data)
+  // Finding Task based on User
+  const user = await User.findById('5d2b919218a50107fad32fbf')
+  await user.populate('tasks').execPopulate()
+  console.log(user.tasks)
 }
 
-myFunction()
+main()
+
+
+// const jwt = require('jsonwebtoken')
+//
+// const myFunction = async () => {
+//   const token = jwt.sign({ _id: 'abc123' }, 'thisismynewcourse', { expiresIn: '7 days'})
+//   console.log(token)
+//
+//   const data = jwt.verify(token, 'thisismynewcourse')
+//   console.log(data)
+// }
+//
+// myFunction()
 
 // encryption and decryption
 //  andrew => poidbfjskbfkjsdf -> andrew

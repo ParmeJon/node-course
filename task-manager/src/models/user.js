@@ -49,6 +49,26 @@ const userSchema = new mongoose.Schema({
   }]
 })
 
+// Virtual Property - helps mongoose see how these things are related
+userSchema.virtual('tasks', {
+  ref: 'Task',
+  localField: '_id',
+  foreignField: 'owner'
+})
+
+// toJSON is called whenever the user obj is stringified
+// res.send uses JSON.stringify(obj) behind the scenes
+userSchema.methods.toJSON = function () {
+  const user = this
+  // removes extra mongoose properties like .save()
+  const userObject = user.toObject()
+
+  delete userObject.password
+  delete userObject.tokens
+
+  return userObject
+}
+
 userSchema.methods.generateAuthToken = async function () {
   const user = this
   const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
@@ -57,6 +77,7 @@ userSchema.methods.generateAuthToken = async function () {
   await user.save()
   return token
 }
+
 
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email })
