@@ -6,19 +6,16 @@ const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT || 3000
 
+const multer = require('multer')
+const upload = multer({
+  dest: 'images'
+})
 
-// Middleware examples
-// app.use((req, res, next) => {
-//   if (req.method === 'GET') {
-//     res.send('GET requests are disabled.')
-//   } else {
-//     next()
-//   }
-// })
+app.post('/upload', upload.single('upload'), (req, res) => {
+  res.send()
+})
 
-// app.use((req, res, next) => {
-//   res.status(503).send('Maintenance: Currently all routes are disabled.')
-// })
+
 
 // parses incoming json so we have it accessible as an object
 app.use(express.json())
@@ -26,6 +23,22 @@ app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
 
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}.` )
+})
+
+// Middleware examples
+// app.use((req, res, next) => {
+  //   if (req.method === 'GET') {
+    //     res.send('GET requests are disabled.')
+    //   } else {
+      //     next()
+      //   }
+      // })
+
+      // app.use((req, res, next) => {
+        //   res.status(503).send('Maintenance: Currently all routes are disabled.')
+        // })
 //
 // Without middleware: new request -> run route handler
 //
@@ -33,9 +46,6 @@ app.use(taskRouter)
 //
 
 
-app.listen(port, () => {
-  console.log(`Server is up on port ${port}.` )
-})
 
 // const Task = require('./models/task')
 // const User = require('./models/user')
@@ -46,7 +56,7 @@ app.listen(port, () => {
 //   // // Turns task.owner to be the entire obj
 //   // await task.populate('owner').execPopulate()
 //   // console.log(task.owner)
-// 
+//
 //   // Finding Task based on User
 //   const user = await User.findById('5d2b919218a50107fad32fbf')
 //   await user.populate('tasks').execPopulate()
@@ -54,7 +64,6 @@ app.listen(port, () => {
 // }
 //
 // main()
-
 
 // const jwt = require('jsonwebtoken')
 //
