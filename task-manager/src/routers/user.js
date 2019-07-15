@@ -109,6 +109,8 @@ router.delete('/users/me', auth, async (req, res) => {
   }
 })
 
+
+// File Uploads
 const upload = multer({
   dest: 'avatar'
 })
