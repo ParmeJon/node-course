@@ -3,8 +3,9 @@ const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 const multer = require('multer')
+const sharp = require('sharp')
 
-// Sign up
+// SIGN UP '/users'
 router.post('/users', async (req, res) => {
   const user = new User(req.body)
 
@@ -16,6 +17,7 @@ router.post('/users', async (req, res) => {
     res.status(400).send(e)
   }
 
+// Before async await technique
   // user.save().then(() => {
   //   res.status(201).send(user)
   // }).catch((e) => {
@@ -24,7 +26,7 @@ router.post('/users', async (req, res) => {
 
 })
 
-// Log in
+// LOGIN '/users/login'
 router.post('/users/login', async (req, res) => {
   try {
     const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -35,6 +37,7 @@ router.post('/users/login', async (req, res) => {
   }
 })
 
+// LOGOUT '/users/logout'
 router.post('/users/logout', auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
@@ -47,7 +50,7 @@ router.post('/users/logout', auth, async (req, res) => {
   }
 })
 
-// Log out of all remove all tokens from user
+// LOGOUT of all and Remove all tokens from user '/users/logoutAll'
 router.post('/users/logoutAll', auth, async (req, res) => {
   try {
     req.user.tokens = []
@@ -58,12 +61,12 @@ router.post('/users/logoutAll', auth, async (req, res) => {
   }
 })
 
-// Get User
+// GET User '/users/me'
 router.get('/users/me', auth, async (req, res) => {
   res.send(req.user)
 })
 
-
+// UPDATE User '/users/me'
 router.patch('/users/me', auth, async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -94,6 +97,7 @@ router.patch('/users/me', auth, async (req, res) => {
   }
 })
 
+// DELETE user '/users/me'
 router.delete('/users/me', auth, async (req, res) => {
   try {
     // const user = await User.findByIdAndDelete(req.user._id)
@@ -110,7 +114,7 @@ router.delete('/users/me', auth, async (req, res) => {
 })
 
 
-// File Uploads
+// MULTER File Uploads
 // without dest property, multer will pass to req for our access to the file instead.
 const upload = multer({
   limits: {
@@ -124,16 +128,21 @@ const upload = multer({
   }
 })
 
+// UPLOAD Avatar '/users/me/avatar'
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
+  // sharp is asynchronous
+  // converts to only pngs and resizes
+  const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250}).png().toBuffer()
+
   // buffer of binary data
-  req.user.avatar = req.file.buffer
+  req.user.avatar = buffer
   await req.user.save()
   res.send()
 }, (error, req, res, next) => {
   res.status(400).send({ error: error.message })
 })
 
-// Delete Avatar
+// DELETE Avatar
 router.delete('/users/me/avatar', auth, async (req, res) => {
   req.user.avatar = undefined
   await req.user.save()
@@ -149,9 +158,9 @@ router.get('/users/:id/avatar', async (req, res) => {
       throw new Error()
     }
 
-    // Set response header.
+    // Set response header
     // Usually defaults to ("content-type", "application/json")
-    res.set('Content-Type', 'image/jpg')
+    res.set('Content-Type', 'image/png')
     res.send(user.avatar)
   } catch (e) {
     res.status(404).send()

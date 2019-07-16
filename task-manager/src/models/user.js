@@ -72,6 +72,8 @@ userSchema.methods.toJSON = function () {
   delete userObject.password
   delete userObject.tokens
 
+  // remove large uneccessary binary data of avatar from json response
+  delete userObject.avatar
   return userObject
 }
 
