@@ -28,6 +28,8 @@ const upload = multer({
 //   throw new Error('From my middleware')
 // }
 
+// Call back function to handle error with that specific call signature
+// lets express know about uncaught errors.
 app.post('/upload', upload.single('upload'), (req, res) => {
   res.send()
 }, (error, req, res, next) => {
