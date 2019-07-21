@@ -29,15 +29,12 @@ const autoscroll = () => {
     // Height of messages container 
     const containerHeight = $messages.scrollHeight
     
-    // How far have I scrolled?
+    // How far have I scrolled? 
+    // scrollTop gives us where the visible top is from the container height
     const scrollOffset = $messages.scrollTop + visibleHeight
-    
-    console.log('messages scroll Top', $messages.scrollTop)
-    console.log('message height', $newMessage.offsetHeight);
-    console.log('container Height', containerHeight)
-    console.log('scroll offset', scrollOffset)
 
     if (containerHeight - newMessageHeight <= scrollOffset) {
+        // set visible top to the maximum height
         $messages.scrollTop = $messages.scrollHeight
     }
 }
